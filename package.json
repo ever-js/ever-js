@@ -1,0 +1,34 @@
+{
+  "name": "ever",
+  "version": "0.0.1",
+  "description": "Easy with extended restify",
+  "main": "everfw.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rpgeeganage/ever.git"
+  },
+  "bin": {
+    "ever-fw": "bin/test-module.js"
+  },
+  "keywords": [
+    "REST",
+    "Restify",
+    "routing",
+    "extended routing",
+    "REST API",
+    "API"
+  ],
+  "author": "geeg",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rpgeeganage/ever/issues"
+  },
+  "dependencies": {
+    "underscore": "1.8.3",
+    "restify": "3.0.3"
+  },
+  "homepage": "https://github.com/rpgeeganage/ever#readme"
+}
