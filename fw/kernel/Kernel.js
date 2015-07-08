@@ -8,7 +8,7 @@ var _ = require("lodash");
 
 var fileStructure = {
     MY_DEPTH_FROM_ROOT : "..",
-    LIB : "./lib",
+    LIB : "lib",
     CONFIG : "config",
     USER_MIDDLE_WARE : "middleware",
     ROUTES : "routes"
@@ -25,13 +25,14 @@ var loadLib = function(libPath) {
     }
     return libSet;
 }
+
 var loadLibFiles = function(libPath) {
     var fileList = fs.readdirSync(path.resolve(libPath));
     var libFileSet = {};
     _.forEach(fileList, function(file){
         if(path.extname(file).toLowerCase() == ".js") {
             libFileSet[path.basename(file, '.js')] =
-                fileStructure.MY_DEPTH_FROM_ROOT + path.sep+path.join(libPath, path.basename(file, '.js'));
+                util.format("%s%s%s", fileStructure.MY_DEPTH_FROM_ROOT, path.sep, path.join(libPath, path.basename(file, '.js') ));
         }
     });
 
