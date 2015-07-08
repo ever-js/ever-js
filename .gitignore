@@ -1,3 +1,5 @@
 .idea
 node_modules
 npm-debug.log
+fw/node_modules
+fw/npm-debug.log
