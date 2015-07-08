@@ -1,9 +1,10 @@
 /**
  * Created by ruwang on 7/8/15.
  */
-var _ = require("lodash");
 var fs = require("fs");
 var path = require("path");
+var util = require("util");
+var _ = require("lodash");
 
 var fileStructure = {
     MY_DEPTH_FROM_ROOT : "..",
@@ -14,7 +15,7 @@ var fileStructure = {
 };
 
 var loadLib = function(libPath) {
-    console.log("Loading Libraries...");
+    util.log("Loading Libraries...");
     var libSet = {};
     var libs = loadLibFiles(fileStructure.LIB);
     if(!_.isEmpty(libs)) {
@@ -41,7 +42,7 @@ var kernel = function() {
     var pub = {};
     pub.start = function() {
         var libSet = loadLib(fileStructure.LIB);
-        console.log("Starting ever...");
+        util.log("Starting ever...");
     };
     return pub;
 }
