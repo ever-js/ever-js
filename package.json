@@ -11,8 +11,9 @@
     "url": "git+https://github.com/rpgeeganage/ever.git"
   },
   "bin": {
-    "ever-fw": "bin/test-module.js"
+    "ever-fw": "bin/everfw.js"
   },
+  "preferGlobal": "true",
   "keywords": [
     "REST",
     "Restify",
@@ -27,8 +28,8 @@
     "url": "https://github.com/rpgeeganage/ever/issues"
   },
   "dependencies": {
-    "underscore": "1.8.3",
-    "restify": "3.0.3"
+    "commander" : "2.8.1",
+    "ncp" : "2.0.0"
   },
   "homepage": "https://github.com/rpgeeganage/ever#readme"
 }
