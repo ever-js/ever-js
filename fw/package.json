@@ -13,5 +13,6 @@
   "dependencies": {
     "lodash": "3.10.0",
     "restify": "3.0.3"
-  }
+  },
+  "ev" : "0.0.1"
 }

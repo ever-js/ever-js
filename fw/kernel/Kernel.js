@@ -6,6 +6,10 @@ var path = require("path");
 var util = require("util");
 var _ = require("lodash");
 
+var banner = require("./Banner");
+
+var completeDependencies = {};
+
 var fileStructure = {
     MY_DEPTH_FROM_ROOT : "..",
     LIB : "lib",
@@ -14,35 +18,67 @@ var fileStructure = {
     ROUTES : "routes"
 };
 
+var packageJson = require(util.format("%s/package.json",fileStructure.MY_DEPTH_FROM_ROOT ));
+
+//Lib loader
 var loadLib = function(libPath) {
     util.log("Loading Libraries...");
-    var libSet = {};
-    var libs = loadLibFiles(fileStructure.LIB);
-    if(!_.isEmpty(libs)) {
-        _.forEach(libs, function (libPath, libName) {
-            libSet[libName] = require(libPath);
-        });
-    }
-    return libSet;
+    return buildStructureFromFileSet(loadFiles(libPath));
 }
 
-var loadLibFiles = function(libPath) {
-    var fileList = fs.readdirSync(path.resolve(libPath));
-    var libFileSet = {};
+//User Middleware loader
+var loadUserMiddleWare = function(userMiddlewarePath) {
+  util.log("Loading User middleware...");
+  return buildStructureFromFileSet(loadFiles(userMiddlewarePath));
+}
+
+//User Routes loader
+var loadUserRoutes = function(routesFolderPath) {
+  util.log("Loading User routes...");
+  return buildStructureFromFileSet(loadFiles(routesFolderPath));
+}
+
+//Config Loader
+var loadConfig = function(configPath) {
+  util.log("Loading Configs...");
+  return buildStructureFromFileSet(loadFiles(configPath));
+}
+
+var buildStructureFromFileSet = function(fileSet) {
+  var structure = {};
+  if(!_.isEmpty(fileSet)) {
+    _.forEach(fileSet, function (modulePath, varName) {
+      structure[varName] = require(modulePath);
+    });
+  }
+  return structure;
+}
+var loadFiles = function(relativePathFromKernal) {
+    var fileList = fs.readdirSync(path.resolve(relativePathFromKernal));
+    var fileSet = {};
     _.forEach(fileList, function(file){
         if(path.extname(file).toLowerCase() == ".js") {
-            libFileSet[path.basename(file, '.js')] =
-                util.format("%s%s%s", fileStructure.MY_DEPTH_FROM_ROOT, path.sep, path.join(libPath, path.basename(file, '.js') ));
+          fileSet[path.basename(file, '.js')] =
+                util.format("%s%s%s", fileStructure.MY_DEPTH_FROM_ROOT,path.sep, path.join(relativePathFromKernal, path.basename(file, '.js') ));
         }
     });
-
-    return libFileSet;
+    return fileSet;
 }
+
+
 
 var kernel = function() {
     var pub = {};
     pub.start = function() {
-        var libSet = loadLib(fileStructure.LIB);
+        util.log(banner.display(packageJson.ev));
+        completeDependencies = {
+          Lib  :  loadLib(fileStructure.LIB),
+          Config : loadConfig(fileStructure.CONFIG),
+          User : {
+            MiddleWare: loadUserMiddleWare(fileStructure.USER_MIDDLE_WARE),
+            UserRoutes: loadUserRoutes(fileStructure.ROUTES)
+          }
+        }
         util.log("Starting ever...");
     };
     return pub;
