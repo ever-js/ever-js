@@ -7,8 +7,7 @@ var util = require("util");
 var _ = require("lodash");
 
 var banner = require("./Banner");
-
-var completeDependencies = {};
+var server = require("./Server");
 
 var fileStructure = {
     MY_DEPTH_FROM_ROOT : "..",
@@ -71,15 +70,18 @@ var kernel = function() {
     var pub = {};
     pub.start = function() {
         util.log(banner.display(packageJson.ev));
-        completeDependencies = {
+        var completeDependencies = {
           Lib  :  loadLib(fileStructure.LIB),
           Config : loadConfig(fileStructure.CONFIG),
           User : {
-            MiddleWare: loadUserMiddleWare(fileStructure.USER_MIDDLE_WARE),
-            UserRoutes: loadUserRoutes(fileStructure.ROUTES)
-          }
+            Middleware: loadUserMiddleWare(fileStructure.USER_MIDDLE_WARE),
+            Routes: loadUserRoutes(fileStructure.ROUTES)
+          },
+          PackageJson : packageJson,
+          Logger : util.log
         }
         util.log("Starting ever...");
+        server.startServer(completeDependencies);
     };
     return pub;
 }
