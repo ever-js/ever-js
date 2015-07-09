@@ -1,8 +1,7 @@
 {
   "name": "ever-js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Easy with extended restify",
-  "main": "everfw.js",
   "scripts": {
     "test": ""
   },
@@ -11,7 +10,7 @@
     "url": "git+https://github.com/ever-js/ever-js.git"
   },
   "bin": {
-    "ever-fw": "bin/everfw.js"
+    "everjs": "bin/ever-js.js"
   },
   "preferGlobal": "true",
   "keywords": [
@@ -31,5 +30,5 @@
     "commander" : "2.8.1",
     "ncp" : "2.0.0"
   },
-  "homepage": "https://github.com/ever-js/ever-js#readme"
+  "homepage": "http://ever-js.github.io"
 }
