@@ -4,11 +4,11 @@
   "description": "Easy with extended restify",
   "main": "everfw.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": ""
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rpgeeganage/ever.git"
+    "url": "git+https://github.com/ever-js/ever-js.git"
   },
   "bin": {
     "ever-fw": "bin/everfw.js"
@@ -25,11 +25,11 @@
   "author": "geeg",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/rpgeeganage/ever/issues"
+    "url": "https://github.com/ever-js/ever-js/issues"
   },
   "dependencies": {
     "commander" : "2.8.1",
     "ncp" : "2.0.0"
   },
-  "homepage": "https://github.com/rpgeeganage/ever#readme"
+  "homepage": "https://github.com/ever-js/ever-js#readme"
 }
