@@ -1,3 +1,5 @@
 ### ever-js -> Easy With Extended Restify
-#Alfa RELEASE
-##Awaiting Documentation
+
+# Alfa RELEASE
+
+## Awaiting Documentation
