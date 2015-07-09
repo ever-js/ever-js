@@ -2,22 +2,22 @@
  * Created by ruwang on 7/9/15.
  */
 module.exports = {
-  AppConfig : function(packageJson){
+  AppConfig : function(dependencies){
     return {
-      name: packageJson.name,
-      port : 8412 || process.env.RESTIFY_PORT,
-      address : "0.0.0.0" || process.env.RESTIFY_LISTEN_IP,
+      name: dependencies.packageJson.name,
+      port : 8312 || process.env.RESTIFY_PORT,
+      address : "0.0.0.0" || process.env.RESTIFY_LISTEN_IP
     }
   },
-  RestifyMiddleWareSet : function(restifyObject, serverObject) {
+  RestifyMiddleWareSet : function(dependencies) {
     return [
-      restifyObject.acceptParser(serverObject.acceptable),
-      restifyObject.gzipResponse(),
-      restifyObject.queryParser(),
-      restifyObject.bodyParser(),
+      dependencies.restifyObject.acceptParser(dependencies.serverObject.acceptable),
+      dependencies.restifyObject.gzipResponse(),
+      dependencies.restifyObject.queryParser(),
+      dependencies.restifyObject.bodyParser()
     ]
   },
-  RestifyPre : function(restifyObject, serverObject, userMiddlewareSet) {
+  RestifyPre : function(dependencies) {
     return [];
   }
 }

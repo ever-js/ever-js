@@ -1,9 +1,6 @@
 var _   = require("lodash");
 var restify   = require("restify");
 
-
-
-
   var config, userMiddleware, userRoutes, lib, server, packageJson, logger;
   var appConfig;
   var port, address;
@@ -16,7 +13,7 @@ var restify   = require("restify");
     userMiddleware = dependencies.User.Middleware;
     userRoutes = dependencies.User.Routes;
     lib = dependencies.Lib;
-    appConfig = config.AppConfig(packageJson);
+    appConfig = config.AppConfig({packageJson:packageJson});
     port = appConfig.port;
     address = appConfig.address;
 
@@ -26,7 +23,10 @@ var restify   = require("restify");
 
   var setRestifyMiddleware = function() {
     logger("{setRestifyMiddleware} Setting Restify Middleware");
-    var middlewareSet = config.RestifyMiddleWareSet(restify, server);
+    var middlewareSet = config.RestifyMiddleWareSet({
+      restifyObject: restify,
+      serverObject: server
+    });
     if(!_.isEmpty(middlewareSet)) {
       _.forEach(middlewareSet,function(middleware){
         server.use(middleware);
@@ -36,7 +36,11 @@ var restify   = require("restify");
 
   var setRestifyPre = function() {
     logger("{setRestifyPre} Setting Restify Pre");
-    var preSet = config.RestifyPre(restify, server, userMiddleware);
+    var preSet = config.RestifyPre({
+      restifyObject: restify,
+      serverObject: server,
+      userMiddleware : userMiddleware
+    });
     if(!_.isEmpty(preSet)) {
       _.forEach(preSet,function(preFunction){
         server.pre(preFunction);

@@ -58,7 +58,7 @@ var loadFiles = function(relativePathFromKernal) {
     _.forEach(fileList, function(file){
         if(path.extname(file).toLowerCase() == ".js") {
           fileSet[path.basename(file, '.js')] =
-                util.format("%s%s%s", fileStructure.MY_DEPTH_FROM_ROOT,path.sep, path.join(relativePathFromKernal, path.basename(file, '.js') ));
+                util.format("%s/%s", fileStructure.MY_DEPTH_FROM_ROOT, path.join(relativePathFromKernal, path.basename(file, '.js') ));
         }
     });
     return fileSet;
