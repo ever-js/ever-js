@@ -2,15 +2,39 @@
  * Created by ruwang on 7/9/15.
  */
 module.exports = {
+  AuthFunction : function(dependencies){
+    /*Add the authentication function as shown below
+     dependencies.filters.<Authentication Filter Module name>.<function name>
+
+     eg:
+     dependencies.filters.Auth.validateAuthHeader
+
+     if there are no Auth function,
+     return false;
+     */
+   return dependencies.filters.SampleFilters.sampleAuthFilter;
+  },
   AppConfig : function(dependencies){
+
     return {
+    /*
+     ADD more restify create server parameters,
+
+     eg:
+       certificate: ...,
+       key: ...,
+
+       */
       name: dependencies.packageJson.name,
       port : 8312 || process.env.RESTIFY_PORT,
       address : "0.0.0.0" || process.env.RESTIFY_LISTEN_IP
     }
   },
-  RestifyMiddleWareSet : function(dependencies) {
+  RestifyMiddlewareSet : function(dependencies) {
     return [
+        /*
+        Add more restify modules
+         */
       dependencies.restifyObject.acceptParser(dependencies.serverObject.acceptable),
       dependencies.restifyObject.gzipResponse(),
       dependencies.restifyObject.queryParser(),
@@ -18,6 +42,10 @@ module.exports = {
     ]
   },
   RestifyPre : function(dependencies) {
-    return [];
+    return [
+        /*
+        Add Restify pre() functions
+         */
+    ];
   }
 }

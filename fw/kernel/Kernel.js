@@ -14,7 +14,8 @@ var fileStructure = {
     LIB : "lib",
     CONFIG : "config",
     USER_MIDDLE_WARE : "middleware",
-    ROUTES : "routes"
+    ROUTES : "routes/Routes.js",
+    USER_FILTERS : "filters"
 };
 
 var packageJson = require(util.format("%s/package.json",fileStructure.MY_DEPTH_FROM_ROOT ));
@@ -31,10 +32,17 @@ var loadUserMiddleWare = function(userMiddlewarePath) {
   return buildStructureFromFileSet(loadFiles(userMiddlewarePath));
 }
 
+//Filter Loader
+var loadUserFilters = function(filterPath) {
+    util.log("Loading User filters...");
+    return buildStructureFromFileSet(loadFiles(filterPath));
+}
+
 //User Routes loader
-var loadUserRoutes = function(routesFolderPath) {
+var loadUserRoutes = function(routesFolderPath, dependencies) {
   util.log("Loading User routes...");
-  return buildStructureFromFileSet(loadFiles(routesFolderPath));
+  var router = require(routesFolderPath).getRoutes(dependencies);
+  return router;
 }
 
 //Config Loader
@@ -70,18 +78,35 @@ var kernel = function() {
     var pub = {};
     pub.start = function() {
         util.log(banner.display(packageJson.ev));
-        var completeDependencies = {
-          Lib  :  loadLib(fileStructure.LIB),
-          Config : loadConfig(fileStructure.CONFIG),
-          User : {
-            Middleware: loadUserMiddleWare(fileStructure.USER_MIDDLE_WARE),
-            Routes: loadUserRoutes(fileStructure.ROUTES)
-          },
-          PackageJson : packageJson,
-          Logger : util.log
-        }
+
+        /************************************
+         * Making the lib folder content available global
+         */
+        Lib = loadLib(fileStructure.LIB);
+        /*
+        End global level vars
+         */
+
+
+        var config = loadConfig(fileStructure.CONFIG);
+        var userMiddleware = loadUserMiddleWare(fileStructure.USER_MIDDLE_WARE);
+        var userFilters = loadUserFilters(fileStructure.USER_FILTERS);
+        var routes = loadUserRoutes(
+            util.format("%s/%s",fileStructure.MY_DEPTH_FROM_ROOT, fileStructure.ROUTES),
+            { UserFilters : userFilters, userMiddleWare: userMiddleware }
+        );
+
         util.log("Starting ever...");
-        server.startServer(completeDependencies);
+        server.startServer({
+            Config : config,
+            User : {
+                Middleware: userMiddleware,
+                Filters : userFilters,
+                Routes: routes
+            },
+            PackageJson : packageJson,
+            Logger : util.log
+        });
     };
     return pub;
 }
