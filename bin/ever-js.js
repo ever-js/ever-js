@@ -17,7 +17,7 @@ var everFwBuild = {
         console.log(err);
       } else {
         console.log("Framework settup completed");
-        console.log("Please run following commands to begin);
+        console.log("Please run following commands to begin");
         console.log("node install");
         console.log("node start");
       }
