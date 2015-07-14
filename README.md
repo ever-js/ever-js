@@ -1,4 +1,4 @@
-ever-js is Excitement With Easy Restify 
+ever-js is [E]njoyment [V]ia [E]asiness of [R]estify 
 ======================
 #####(Alpha Release)
 ### This framework is completely based on **[Restify](http://mcavage.me/node-restify/)**.
