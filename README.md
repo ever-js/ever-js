@@ -328,11 +328,15 @@ Contains the heart of the framework. Try not to edit this.
 * **Kernel.js** - Loads all the dependencies and pass them to modules.
 * **Server.js** - This is where Restify server loads all the routes, lib, middleware, filter and configs.
 * **Banner.js** - Just prints my logo :)
+
 ---
 ####main.js
+
 ---
 Executes the kernel of the framework. Not much to see.
+
 ---
+
 ####package.json
 ---
 Default package.json for the current application. You can add any dependencies which required. But, please do not remove any existing ones.
