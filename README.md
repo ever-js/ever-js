@@ -45,7 +45,96 @@ MyFirstApp/
 	|--package.json
 ```
 
-#####config/
+####routes/
+This contains all the routing information. These settings are stored in **Routes.js**
+
+Structure of the Routes.js as follows.
+
+```js
+module.exports = {
+
+    getRoutes : function(dependencies) {
+
+        var userFilters = dependencies.UserFilters;
+        var userMiddleware = dependencies.userMiddleWare;
+
+        return {            
+            GET: [],
+            POST: [],
+            PUT: [],
+            DELETE: []
+            }
+	}
+}
+```
+
+* ** GET ** holds all the routings uses **http GET** method
+* ** POST ** holds all the routing uses **http POST** method
+* ** PUT ** holds all the routing uses **http PUT** method
+* ** DELETE ** holds all the routing uses **http DELETE** method 
+
+* **Adding a new route**
+Following is the syntax for adding a route.
+
+```js
+HTTP_METHOD : [
+	{
+		config: {
+	    	path: 'Patter of the route',
+	    	isSecure: true | false 
+		},
+		method: userMiddleware.[Middleware Name].[Method Name],
+		filters: [filter 1, filter 2, ...]
+	}	
+]
+```
+
+* **config**
+
+>
+* **path** - Pattern of the route
+* **isSecure** - If set true, a authentication function must be set in the config section as mentioned below section. 
+
+
+* **method** - Holds middleware to execute on particular pattern
+* **filters** - Executes before the Middleware defined in the method section.
+
+The sample Route file is as follows.
+
+```js
+module.exports = {
+
+    getRoutes : function(dependencies) {
+        var userFilters = dependencies.UserFilters;
+        var userMiddleware = dependencies.userMiddleWare;
+        return {
+            	GET: [
+                	{
+                    	config: {
+                        	path: '/get-sample-route-no-filter',
+                        	isSecure: false
+                    	},
+                    	method: userMiddleware.SampleMw.getWithoutFilters,
+                    	filters: []
+                	},
+                	{
+                    		config: {
+                        		path: '/get-sample-route-with-filter',
+                        		isSecure: true
+                    		},
+                    		method: userMiddleware.SampleMw.getWithFilters,
+                    		filters: [userFilters.SampleFilters.sampleFilter]
+                	}
+            	],
+            	POST: [],
+            	PUT: [],
+            	DELETE: []
+            }
+	}
+}
+```
+
+####config/
 ---
 
 This folder contains the main config file **RestifyConfig.js**
@@ -115,4 +204,16 @@ Following plugins are loaded as default settings
 This section is used to load Restify's **pre()** modules.  
 ```js
   RestifyPre : function(dependencies) {
+```
+Use the following syntax to load the load the modules.
+
+```js
+dependencies.restifyObject.[pre filter|pre function|pre module]
+```
+Example :
+```js
+return [
+          dependencies.restifyObject.pre.sanitizePath(),
+          dependencies.restifyObject.pause()
+    ];
 ```
