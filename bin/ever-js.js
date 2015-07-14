@@ -16,12 +16,15 @@ var everFwBuild = {
       if(err) {
         console.log(err);
       } else {
-        console.log("Copying the framwork structure");
+        console.log("Framework settup completed");
+        console.log("Please run following commands to begin);
+        console.log("node install");
+        console.log("node start");
       }
     });
   },
   help : function() {
-    console.log("Please run ", "ever-fw -init");
+    console.log("Please run ", "everjs init");
   }
 }
 
