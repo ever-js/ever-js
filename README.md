@@ -17,6 +17,9 @@ Follow the below mentioned steps to create the first application.
 ```bash
 mkdir MyFirstApp
 cd MyFirstApp/
+```
+Then run following command to initialise framework. 
+```bash
 everjs init
 ```
 
@@ -56,7 +59,7 @@ In this section, if you do not have any authentication filter, use as follows.
 ```js
 	return false;
 ```
-Else, follow below mentioned syntax
+Else, follow below mentioned syntax,
 ```js
 	return dependencies.filters.[Filter name].[Authentication function name] ;
 ```
@@ -74,7 +77,7 @@ This section is dedicate to **[Restify Create Server paramters](http://mcavage.m
 ```
 You can add create server parameters as follows,
 
-```json
+```js
 {
   certificate: ...,
   key: ...,
@@ -84,8 +87,7 @@ This section has the
 
 * **Application name** retrieves from **package.json**
 * **Server Port**, which is **default to 8312** or can be set using an **environment variable : RESTIFY_PORT**
-* **Listen address**, which is to all the connections or can be set using an **environment variable: 
-RESTIFY__LISTEN_IP **
+* **Listen address**, which is to all the connections or can be set using an **environment variable: RESTIFY__LISTEN_IP **
 
 ```js
   name: dependencies.packageJson.name,
@@ -94,6 +96,7 @@ RESTIFY__LISTEN_IP **
 ```
 
 * **RestifyMiddlewareSet** section
+
 This section is used to load the **[Restify plugins](http://mcavage.me/node-restify/#bundled-plugins)**
 
 ```js
@@ -101,14 +104,15 @@ This section is used to load the **[Restify plugins](http://mcavage.me/node-rest
 ```
 Following plugins are loaded as default settings
 ```js
-      dependencies.restifyObject.acceptParser(dependencies.serverObject.acceptable),
-      dependencies.restifyObject.gzipResponse(),
-      dependencies.restifyObject.queryParser(),
-      dependencies.restifyObject.bodyParser()
+  dependencies.restifyObject.acceptParser(dependencies.serverObject.acceptable),
+  dependencies.restifyObject.gzipResponse(),
+  dependencies.restifyObject.queryParser(),
+  dependencies.restifyObject.bodyParser()
 ```
 
 * **RestifyPre** section
 
+This section is used to load Restify's **pre()** modules.  
 ```js
   RestifyPre : function(dependencies) {
 ```
