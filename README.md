@@ -194,7 +194,7 @@ This section has the
 
 * **Application name** retrieves from **package.json**
 * **Server Port**, which is **default to 8312** or can be set using an **environment variable : RESTIFY_PORT**
-* **Listen address**, which is to all the connections or can be set using an **environment variable: RESTIFY__LISTEN_IP **
+* **Listen address**, which is to all the connections or can be set using an **environment variable: RESTIFY_** **LISTEN**_**IP**
 
 ```js
   name: dependencies.packageJson.name,
