@@ -1,10 +1,10 @@
-ever-js is Easy With Extended Restify 
+ever-js is Excitement With Easy Restify 
 ======================
 #####(Alpha Release)
 ### This framework is completely based on **[Restify](http://mcavage.me/node-restify/)**.
 
 ---
-####Installing the framwork
+####Installing the framework
 
 Please note that, **-g** is required to use.
 ```js
@@ -46,6 +46,7 @@ MyFirstApp/
 ```
 
 ####routes/
+---
 This contains all the routing information. These settings are stored in **Routes.js**
 
 Structure of the Routes.js as follows.
@@ -68,10 +69,10 @@ module.exports = {
 }
 ```
 
-* ** GET ** holds all the routings uses **http GET** method
-* ** POST ** holds all the routing uses **http POST** method
-* ** PUT ** holds all the routing uses **http PUT** method
-* ** DELETE ** holds all the routing uses **http DELETE** method 
+* **GET** holds all the routings uses **http GET** method
+* **POST** holds all the routing uses **http POST** method
+* **PUT** holds all the routing uses **http PUT** method
+* **DELETE** holds all the routing uses **http DELETE** method 
 
 * **Adding a new route**
 Following is the syntax for adding a route.
@@ -132,6 +133,23 @@ module.exports = {
             }
 	}
 }
+```
+
+####lib/
+---
+Node modules added to this folder can be access via User Middleware and filters.
+
+Syntax for accessing the Lib files.
+
+```js
+Lib.[Module file name].[function name]()
+```
+
+**Example:**
+
+**sampleFunction()** in **SampleLib.js** module accessible as follows.
+```js
+Lib.SampleLib.sampleFunction();
 ```
 
 ####config/
