@@ -9,8 +9,9 @@ var package = require('../package.json');
 
 var everFwBuild = {
   create : function() {
+    console.log("ever-js cli");
+    console.log("=============");
     console.log("Copying the framwork structure");
-    console.log("From : " + fwFolder );
     console.log("To : " + currentPath );
     ncp(fwFolder, currentPath, function (err) {
       if(err) {
