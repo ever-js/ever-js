@@ -1,5 +1,6 @@
-ever-js is [E]njoyment [V]ia [E]asiness of [R]estify 
+[E]njoyment [V]ia [E]asiness of [R]estify - js
 ======================
+
 #####(Alpha Release)
 ### This framework is completely based on **[Restify](http://mcavage.me/node-restify/)**.
 
@@ -27,24 +28,24 @@ everjs init
 
 ```bash
 MyFirstApp/
+	|-routes/
+		|--Routes.js
+	|-lib/
+		|--SampleLib.js
 	|-config/
 		|--RestifyConfig.js
 	|-filters/
 		|--SampleFilters.js
+	|-middleware/
+		|--SampleMw.js
 	|-kernel/
 		|--Banner.js  
 		|--Kernel.js  
 		|--Server.js
-	|-lib/
-		|--SampleLib.js
-	|-middleware/
-		|--SampleMw.js
-	|-routes/
-		|--Routes.js
 	|--main.js
 	|--package.json
 ```
-
+---
 ####routes/
 ---
 This contains all the routing information. These settings are stored in **Routes.js**
@@ -134,9 +135,11 @@ module.exports = {
 	}
 }
 ```
-
+---
 ####lib/
 ---
+> **[Please refer the sample filter file](https://github.com/ever-js/ever-js/blob/master/fw/lib/SampleLib.js)**
+
 Node modules added to this folder can be access via User Middleware and filters.
 
 Syntax for accessing the Lib files.
@@ -151,7 +154,7 @@ Lib.[Module file name].[function name]()
 ```js
 Lib.SampleLib.sampleFunction();
 ```
-
+---
 ####config/
 ---
 
@@ -235,3 +238,101 @@ return [
           dependencies.restifyObject.pause()
     ];
 ```
+---
+####filters/
+---
+> **[Please refer the sample filter file](https://github.com/ever-js/ever-js/blob/master/fw/filters/SampleFilters.js)**
+
+Contains the functionality which executes prior to assigned user middleware.
+
+Node modules added to this folder can be access from **Routes.js**.
+
+**Format of the filter function is very important !!!**
+
+Please follow below mentioned format for filter function.
+
+```js
+function(req, res, next) {
+        //Your logic goes here
+        next();
+}
+```
+
+sample filter :
+
+```js
+sampleFilter : function(req,res,next) {
+        console.log("Sample Filter.");
+        next();
+}
+```
+
+Syntax for accessing the filter files from Routes.js.
+
+```js
+userFilters.[Filter file name].[filter function name]
+```
+Example:
+
+**sampleFilter()** in **SampleFilters.js** module accessible as follows.
+
+```js
+userFilters.SampleFilters.sampleFilter();
+```
+---
+####middleware/
+---
+> **[Please refer the sample filter file](https://github.com/ever-js/ever-js/blob/master/fw/middleware/SampleMw.js)**
+
+Contains the functionality which executes based on the route patterns.
+
+Node modules added to this folder can be access from **Routes.js**.
+
+**Format of the Middleware function is very important !!!**
+
+Please follow below mentioned format for filter function.
+
+```js
+function(req, res, next) {
+        //Your logic goes here
+}
+```
+
+sample Middleware :
+
+```js
+getWithoutFilters: function (req, res, next) {
+   res.send(200, {msg: "GET Without Filters"});
+},
+```
+
+Syntax for accessing the filter files from Routes.js.
+
+```js
+userMiddleware.[Middleware file name].[Middleware function name]
+```
+Example:
+
+**getWithoutFilters()** in **SampleMw.js** module accessible as follows.
+
+```js
+userFilters.SampleMw.getWithoutFilters;
+```
+---
+####kernel/
+---
+Contains the heart of the framework. Try not to edit this.
+
+> But, be my guest to suggest any modification.
+
+* **Kernel.js** - Loads all the dependencies and pass them to modules.
+* **Server.js** - This is where Restify server loads all the routes, lib, middleware, filter and configs.
+* **Banner.js** - Just prints my logo :)
+---
+####main.js
+---
+Executes the kernel of the framework. Not much to see.
+---
+####package.json
+---
+Default package.json for the current application. You can add any dependencies which required. But, please do not remove any existing ones.
