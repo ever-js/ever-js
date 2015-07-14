@@ -2,9 +2,22 @@
 ======================
 
 #####(Alpha Release)
+---
 ### This framework is completely based on **[Restify](http://mcavage.me/node-restify/)**.
 
 ---
+* **[Installing the ever-js](https://github.com/ever-js/ever-js/blob/master/README.md#installing-the-framework)**
+* **[Folder structure](https://github.com/ever-js/ever-js/blob/master/README.md#folder-structure)**
+* **[Routes](https://github.com/ever-js/ever-js/blob/master/README.md#routes)**
+* **[Library](https://github.com/ever-js/ever-js/blob/master/README.md#lib)**
+* **[Config](https://github.com/ever-js/ever-js/blob/master/README.md#config)**
+* **[User Filters](https://github.com/ever-js/ever-js/blob/master/README.md#filters)**
+* **[User Middleware](https://github.com/ever-js/ever-js/blob/master/README.md#middleware)**
+* **[Kernel](https://github.com/ever-js/ever-js/blob/master/README.md#kernel)**
+* **[main.js](https://github.com/ever-js/ever-js/blob/master/README.md#mainjs)**
+* **[package.json](https://github.com/ever-js/ever-js/blob/master/README.md#packagejson)**
+---
+
 ####Installing the framework
 
 Please note that, **-g** is required to use.
