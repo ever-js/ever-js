@@ -4,8 +4,8 @@ var fs = require('fs');
 var ncp = require('ncp').ncp;
 var path = require('path');
 var currentPath = path.resolve(process.cwd());
-var fwFolder = path.join(path.resolve(__dirname, '..'),"fw");
-var package = require('../package.json');
+var fwFolder = path.join(path.resolve(__dirname, ".."),"fw");
+var packageJson = require("../package.json");
 
 var everFwBuild = {
   create : function() {
@@ -17,7 +17,7 @@ var everFwBuild = {
       if(err) {
         console.log(err);
       } else {
-        console.log("Framework settup completed");
+        console.log("Framework setting-up completed");
         console.log("Please run following commands to begin");
         console.log("node install");
         console.log("node start");
@@ -30,8 +30,8 @@ var everFwBuild = {
 }
 
 program
-  .version(package.version, '-v, --version')
-  .option('-i, --init', 'Create new project')
+  .version(packageJson.version, "-v, --version")
+  .option("-i, --init", "Create new project")
   .parse(process.argv);
 
 if(program.init) {

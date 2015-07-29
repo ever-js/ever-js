@@ -1,6 +1,4 @@
-/**
- * Created by ruwang on 7/8/15.
- */
+'use strict'
 var fs = require("fs");
 var path = require("path");
 var util = require("util");
@@ -9,106 +7,117 @@ var _ = require("lodash");
 var banner = require("./Banner");
 var server = require("./Server");
 
-var fileStructure = {
+var kernel = function() {
+  var self = {};
+  var pub = {};
+
+  //Folder structure
+  self.fileStructure = {
     MY_DEPTH_FROM_ROOT : "..",
     LIB : "lib",
     CONFIG : "config",
     USER_MIDDLE_WARE : "middleware",
     ROUTES : "routes/Routes.js",
     USER_FILTERS : "filters"
-};
+  };
 
-var packageJson = require(util.format("%s/package.json",fileStructure.MY_DEPTH_FROM_ROOT ));
+  //Need package json
+  self.packageJson = require(util.format("%s/package.json", self.fileStructure.MY_DEPTH_FROM_ROOT ));
 
-//Lib loader
-var loadLib = function(libPath) {
+  //Lib loader
+  self.loadLib = function(libPath) {
+    util.log("------------------------------");
     util.log("Loading Libraries...");
-    return buildStructureFromFileSet(loadFiles(libPath));
-}
-
-//User Middleware loader
-var loadUserMiddleWare = function(userMiddlewarePath) {
-  util.log("Loading User middleware...");
-  return buildStructureFromFileSet(loadFiles(userMiddlewarePath));
-}
-
-//Filter Loader
-var loadUserFilters = function(filterPath) {
-    util.log("Loading User filters...");
-    return buildStructureFromFileSet(loadFiles(filterPath));
-}
-
-//User Routes loader
-var loadUserRoutes = function(routesFolderPath, dependencies) {
-  util.log("Loading User routes...");
-  var router = require(routesFolderPath).getRoutes(dependencies);
-  return router;
-}
-
-//Config Loader
-var loadConfig = function(configPath) {
-  util.log("Loading Configs...");
-  return buildStructureFromFileSet(loadFiles(configPath));
-}
-
-var buildStructureFromFileSet = function(fileSet) {
-  var structure = {};
-  if(!_.isEmpty(fileSet)) {
-    _.forEach(fileSet, function (modulePath, varName) {
-      structure[varName] = require(modulePath);
-    });
+    return self.buildStructureFromFileSet(self.loadFiles(libPath));
   }
-  return structure;
-}
-var loadFiles = function(relativePathFromKernal) {
+
+  //User Middleware loader
+  self.loadUserMiddleWare = function(userMiddlewarePath) {
+    util.log("------------------------------");
+    util.log("Loading User middleware...");
+    return self.buildStructureFromFileSet(self.loadFiles(userMiddlewarePath));
+  }
+
+  //Filter Loader
+  self.loadUserFilters = function(filterPath) {
+    util.log("------------------------------");
+    util.log("Loading User filters...");
+    return self.buildStructureFromFileSet(self.loadFiles(filterPath));
+  }
+
+  //User Routes loader
+  self.loadUserRoutes = function(routesFolderPath, dependencies) {
+    util.log("------------------------------");
+    util.log("Loading User routes...");
+    var router = require(routesFolderPath).getRoutes(dependencies);
+    return router;
+  }
+
+  //Config Loader
+  self.loadConfig = function(configPath) {
+    util.log("------------------------------");
+    util.log("Loading Configs...");
+    return self.buildStructureFromFileSet(self.loadFiles(configPath));
+  }
+
+  self.buildStructureFromFileSet = function(fileSet) {
+    var structure = {};
+    if(!_.isEmpty(fileSet)) {
+      _.forEach(fileSet, function (modulePath, varName) {
+        util.log("\t[" + varName + "] => " + modulePath);
+        structure[varName] = require(modulePath);
+      });
+    }
+    return structure;
+  }
+
+  self.loadFiles = function(relativePathFromKernal) {
     var fileList = fs.readdirSync(path.resolve(relativePathFromKernal));
     var fileSet = {};
     _.forEach(fileList, function(file){
-        if(path.extname(file).toLowerCase() == ".js") {
-          fileSet[path.basename(file, '.js')] =
-                util.format("%s/%s", fileStructure.MY_DEPTH_FROM_ROOT, path.join(relativePathFromKernal, path.basename(file, '.js') ));
-        }
+      if(path.extname(file).toLowerCase() == ".js") {
+        fileSet[path.basename(file, '.js')] =
+          util.format("%s/%s", self.fileStructure.MY_DEPTH_FROM_ROOT, path.join(relativePathFromKernal, path.basename(file, '.js') ));
+      }
     });
     return fileSet;
-}
+  }
 
+  pub.start = function() {
+    util.log(banner.display(self.packageJson));
+    /************************************
+     * Making the lib folder content available global
+     */
+    GLOBAL.Lib = self.loadLib(self.fileStructure.LIB);
+    /*
+     End global level vars
+     */
+    var config = self.loadConfig(self.fileStructure.CONFIG);
+    var userMiddleware = self.loadUserMiddleWare(self.fileStructure.USER_MIDDLE_WARE);
+    var userFilters = self.loadUserFilters(self.fileStructure.USER_FILTERS);
+    var routes = self.loadUserRoutes(
+      util.format("%s/%s", self.fileStructure.MY_DEPTH_FROM_ROOT, self.fileStructure.ROUTES),
+      {
+        UserFilters : userFilters,
+        userMiddleWare: userMiddleware,
+        log: util.log
+      }
+    );
+    util.log("Starting ever...");
+    util.log("------------------------------");
+    server.startServer({
+      Config : config,
+      User : {
+        Middleware: userMiddleware,
+        Filters : userFilters,
+        Routes: routes
+      },
+      PackageJson : self.packageJson,
+      Logger : util.log
+    });
+  }
 
-
-var kernel = function() {
-    var pub = {};
-    pub.start = function() {
-        util.log(banner.display(packageJson.ev));
-
-        /************************************
-         * Making the lib folder content available global
-         */
-        Lib = loadLib(fileStructure.LIB);
-        /*
-        End global level vars
-         */
-
-
-        var config = loadConfig(fileStructure.CONFIG);
-        var userMiddleware = loadUserMiddleWare(fileStructure.USER_MIDDLE_WARE);
-        var userFilters = loadUserFilters(fileStructure.USER_FILTERS);
-        var routes = loadUserRoutes(
-            util.format("%s/%s",fileStructure.MY_DEPTH_FROM_ROOT, fileStructure.ROUTES),
-            { UserFilters : userFilters, userMiddleWare: userMiddleware }
-        );
-
-        util.log("Starting ever...");
-        server.startServer({
-            Config : config,
-            User : {
-                Middleware: userMiddleware,
-                Filters : userFilters,
-                Routes: routes
-            },
-            PackageJson : packageJson,
-            Logger : util.log
-        });
-    };
-    return pub;
+  return pub;
 }
 
 module.exports = kernel();

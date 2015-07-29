@@ -1,153 +1,167 @@
+'use restric'
 var _   = require("lodash");
 var restify   = require("restify");
-var config;
-var userMiddleware;
-var userFilters;
-var userRoutes;
-var server;
-var packageJson;
-var logger;
-var appConfig;
-var port, address;
-var authFunction;
 
-var init = function(dependencies) {
-  //Initialising basic variables.
-  logger = dependencies.Logger;
-  packageJson = dependencies.PackageJson;
-  userMiddleware = dependencies.User.Middleware;
-  userFilters  =  dependencies.User.Filters;
-  userRoutes = dependencies.User.Routes;
+
+everJsServer = function() {
+
+  var self = {};
+  var pub = {};
+
+  self.logger = null;
+  self.packageJson = null;
+  self.userMiddleware = null;
+  self.userFilters  =  null;
+  self.userRoutes = null
 
   //Initialising config based values
-  config = dependencies.Config.RestifyConfig;
-  appConfig = config.AppConfig({packageJson:packageJson});
+  self.config = null;
+  self.appConfig = null;
 
-  port = appConfig.port;
-  address = appConfig.address;
+  self.port = null;
+  self.address = null;
 
   //Do u need authentication bro !!
-  authFunction = config.AuthFunction({
-   filters : userFilters
-  })
+  self.authFunction = null;
+
 
   //Ok Lets start the server
-  logger("{init} Initializing server");
-  server = restify.createServer(appConfig);
-}
+  self.logger = null;
+  self.server = null;
 
-var setRestifyMiddleware = function() {
-  logger("{setRestifyMiddleware} Setting Restify Middleware");
-  var middlewareSet = config.RestifyMiddlewareSet({
-    restifyObject: restify,
-    serverObject: server
-  });
-  if(!_.isEmpty(middlewareSet)) {
-    _.forEach(middlewareSet,function(middleware){
-      server.use(middleware);
-    });
+  self.init = function(dependencies) {
+    //Initialising basic variables.
+    self.logger = dependencies.Logger;
+    self.packageJson = dependencies.PackageJson;
+    self.userMiddleware = dependencies.User.Middleware;
+    self.userFilters  =  dependencies.User.Filters;
+    self.userRoutes = dependencies.User.Routes;
+
+    //Initialising config based values
+    self.config = dependencies.Config.RestifyConfig;
+    self.appConfig = self.config.AppConfig({packageJson:self.packageJson});
+
+    self.port = self.appConfig.port;
+    self.address = self.appConfig.address;
+
+    self.authFunction = self.config.AuthFunction({
+      filters : self.userFilters
+    })
+
+    //Ok Lets start the server
+    self.logger("{init} Initializing server");
+    self.server = restify.createServer(self.appConfig);
   }
-}
 
-var setRestifyPre = function() {
-  logger("{setRestifyPre} Setting Restify Pre");
-  var preSet = config.RestifyPre({
-    restifyObject: restify,
-    serverObject: server,
-    userMiddleware : userMiddleware,
-    filters : userFilters
-  });
-  if(!_.isEmpty(preSet)) {
-    _.forEach(preSet,function(preFunction){
-      server.pre(preFunction);
+  self.setRestifyMiddleware = function() {
+    self.logger("{setRestifyMiddleware} Setting Restify Middleware");
+    var middlewareSet = self.config.RestifyMiddlewareSet({
+      restifyObject: restify,
+      serverObject: self.server
     });
-  }
-}
-
-var setUserMiddleware = function(){
-  logger("{setUserMiddleware} Setting User Middleware");
-
-  _.forEach(userRoutes, function(routes, key){
-    switch(key) {
-      case "GET" :
-            if(!_.isEmpty(routes)){
-              _.forEach(routes,function(route){
-                server.get(route.config, buildUserMiddlewareChain(route));
-              });
-            }
-            break;
-      case "POST" :
-        if(!_.isEmpty(routes)){
-          _.forEach(routes,function(route){
-            server.post(route.config, buildUserMiddlewareChain(route));
-          });
-        }
-        break;
-      case "PUT" :
-        if(!_.isEmpty(routes)){
-          _.forEach(routes,function(route){
-            server.put(route.config, buildUserMiddlewareChain(route));
-          });
-        }
-        break;
-      case "DELETE" :
-        if(!_.isEmpty(routes)){
-          _.forEach(routes,function(route){
-            server.del(route.config, buildUserMiddlewareChain(route));
-          });
-        }
-        break;
-    }
-  })
-}
-
-var startServer = function(dependencies) {
-  init(dependencies);
-  setRestifyMiddleware();
-  setRestifyPre();
-  setUserMiddleware();
-  server.listen(port ,address, function(){
-    logger("{startServer} "+server.name  + ' listening at '+ server.url);
-  });
-}
-
-var buildUserMiddlewareChain = function(route) {
-  var mwChain = [];
-
-  //Check for valid configs
-  if(_.isEmpty(route.config) || !route.config.path) {
-    throw("There are invalid routes. Please check again.");
-  } else {
-
-    //Load the authentication function
-    if (route.config.isSecure) {
-      if (authFunction && _.isFunction(authFunction)) {
-        mwChain.push(authFunction);
-      } else {
-        throw("Invalid authentication function !!\nPlease add a valid authentication function !!");
-      }
-    }
-    //Load the filters if available
-    if (!_.isEmpty(route.filters)) {
-      _.forEach(route.filters, function (filter) {
-        if (filter && _.isFunction(filter)) {
-          mwChain.push(filter);
-        } else {
-          throw("Invalid Filter at : " + route.config.path)
-        }
+    if(!_.isEmpty(middlewareSet)) {
+      _.forEach(middlewareSet,function(middleware){
+        self.server.use(middleware);
       });
     }
+  }
 
-    //Finally, load the middleware
-    if (route.method && _.isFunction(route.method)) {
-      mwChain.push(route.method);
-    } else {
-      throw("Invalid user defined middleware : " + route.config.path);
+  self.setRestifyPre = function() {
+    self.logger("{setRestifyPre} Setting Restify Pre");
+    var preSet = self.config.RestifyPre({
+      restifyObject: restify,
+      serverObject: self.server,
+      userMiddleware : self.userMiddleware,
+      filters : self.userFilters
+    });
+    if(!_.isEmpty(preSet)) {
+      _.forEach(preSet,function(preFunction){
+        self.server.pre(preFunction);
+      });
     }
   }
 
-  return mwChain;
+  self.setUserMiddleware = function(){
+    self.logger("{setUserMiddleware} Setting User Middleware");
+
+    _.forEach(self.userRoutes, function(routes, key){
+      switch(key) {
+        case "GET" :
+          self.setRoutes("get", routes);
+          break;
+        case "POST" :
+          self.setRoutes("post", routes);
+          break;
+        case "PUT" :
+          self.setRoutes("put", routes);
+          break;
+        case "DELETE" :
+          self.setRoutes("del", routes);
+          break;
+      }
+    });
+  }
+
+  self.setRoutes = function(serverFunctionName, routes) {
+    if(!_.isEmpty(routes)){
+      _.forEach(routes,function(route){
+        self.server[serverFunctionName](route.config, self.buildUserMiddlewareChain(route));
+      });
+    }
+  }
+
+  self.buildUserMiddlewareChain = function(route) {
+    var mwChain = [];
+
+    //Check for valid configs
+    if(_.isEmpty(route.config) || !route.config.path) {
+      throw("There are invalid routes. Please check again.");
+    } else {
+
+      //Load the authentication function
+      if (route.config.isSecure) {
+        if (self.authFunction && _.isFunction(self.authFunction)) {
+          mwChain.push(self.authFunction);
+        } else {
+          throw("Invalid authentication function !!\nPlease add a valid authentication function !!");
+        }
+      }
+      //Load the filters if available
+      if (!_.isEmpty(route.filters)) {
+        _.forEach(route.filters, function (filter) {
+          if (filter && _.isFunction(filter)) {
+            mwChain.push(filter);
+          } else {
+            throw("Invalid Filter at : " + route.config.path)
+          }
+        });
+      }
+
+      //Finally, load the middleware
+      if (route.method && _.isFunction(route.method)) {
+        mwChain.push(route.method);
+      } else {
+        throw("Invalid user defined middleware : " + route.config.path);
+      }
+    }
+
+    return mwChain;
+  }
+
+  pub.startServer = function(dependencies) {
+    self.init(dependencies);
+    self.setRestifyMiddleware();
+    self.setRestifyPre();
+    self.setUserMiddleware();
+    self.server.listen(self.port ,self.address, function() {
+      self.logger("------------------------------");
+      self.logger("{startServer} " + self.server.name  + ' listening at '+ self.server.url);
+      self.logger("------------------------------");
+    });
+  }
+
+  return pub;
+
 }
-module.exports =  {
-  startServer : startServer
-}
+
+module.exports =  everJsServer();

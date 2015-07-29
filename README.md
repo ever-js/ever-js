@@ -1,7 +1,5 @@
 [E]njoyment [V]ia [E]asiness of [R]estify - js
 ======================
-
-#####(Alpha Release)
 ---
 ### This framework is completely based on **[Restify](http://mcavage.me/node-restify/)**.
 
@@ -19,14 +17,14 @@
 
 ---
 
-####Installing the framework
+#### Installing the framework
 
 Please note that, **-g** is required to use.
 ```js
 npm install -g ever-js
 ```
 
-####Building the first app
+#### Building the first app
 Follow the below mentioned steps to create the first application.
 
 ```bash
@@ -38,7 +36,7 @@ Then run following command to initialise framework.
 everjs init
 ```
 
-####Folder structure
+#### Folder structure
 
 ```bash
 MyFirstApp/
@@ -60,7 +58,7 @@ MyFirstApp/
 	|--package.json
 ```
 ---
-####routes/
+#### routes/
 ---
 This contains all the routing information. These settings are stored in **Routes.js**
 
@@ -150,7 +148,7 @@ module.exports = {
 }
 ```
 ---
-####lib/
+#### lib/
 ---
 > **[Please refer the sample filter file](https://github.com/ever-js/ever-js/blob/master/fw/lib/SampleLib.js)**
 
@@ -169,7 +167,7 @@ Lib.[Module file name].[function name]()
 Lib.SampleLib.sampleFunction();
 ```
 ---
-####config/
+#### config/
 ---
 
 This folder contains the main config file **RestifyConfig.js**
@@ -253,7 +251,7 @@ return [
     ];
 ```
 ---
-####filters/
+#### filters/
 ---
 > **[Please refer the sample filter file](https://github.com/ever-js/ever-js/blob/master/fw/filters/SampleFilters.js)**
 
@@ -294,7 +292,7 @@ Example:
 userFilters.SampleFilters.sampleFilter();
 ```
 ---
-####middleware/
+#### middleware/
 ---
 > **[Please refer the sample filter file](https://github.com/ever-js/ever-js/blob/master/fw/middleware/SampleMw.js)**
 
@@ -333,7 +331,7 @@ Example:
 userFilters.SampleMw.getWithoutFilters;
 ```
 ---
-####kernel/
+#### kernel/
 ---
 Contains the heart of the framework. Try not to edit this.
 
@@ -344,13 +342,13 @@ Contains the heart of the framework. Try not to edit this.
 * **Banner.js** - Just prints my logo :)
 
 ---
-####main.js
+#### main.js
 
 ---
 Executes the kernel of the framework. Not much to see.
 
 ---
 
-####package.json
+#### package.json
 ---
 Default package.json for the current application. You can add any dependencies which required. But, please do not remove any existing ones.
