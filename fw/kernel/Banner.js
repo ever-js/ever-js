@@ -1,5 +1,5 @@
 module.exports = {
-  display : function(version) {
+  display : function(packageJson) {
     return "\n" +
       "                                        \n" +
       "                ,,,,,,,,,,,,,           \n" +
@@ -31,10 +31,13 @@ module.exports = {
       "                   of                   \n" +
       "                [R]estify               \n" +
       "  ======================================\n" +
-      "           Version : " + version + "    \n" +
+      "    Application Name : " + packageJson.name + "\n" +
       "  ======================================\n"+
       "  ======================================\n" +
-      "               Alpha Release            \n" +
+      "    Application Version : " + packageJson.ev + "\n" +
+      "  ======================================\n"+
+      "  ======================================\n" +
+      "     Framework version : v1.0.0         \n" +
       "  ======================================\n";      
   }
 }
