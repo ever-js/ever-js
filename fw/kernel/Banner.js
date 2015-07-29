@@ -31,13 +31,13 @@ module.exports = {
       "                   of                   \n" +
       "                [R]estify               \n" +
       "  ======================================\n" +
-      "    Application Name : " + packageJson.name + "\n" +
+      "  \tApplication Name : " + packageJson.name + "\n" +
       "  ======================================\n"+
       "  ======================================\n" +
-      "    Application Version : " + packageJson.ev + "\n" +
+      "  \tApplication Version : " + packageJson.version + "\n" +
       "  ======================================\n"+
       "  ======================================\n" +
-      "     Framework version : v1.0.0         \n" +
+      "  \tFramework version : 1.0.0         \n" +
       "  ======================================\n";      
   }
 }

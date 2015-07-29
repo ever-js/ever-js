@@ -26,24 +26,28 @@ var kernel = function() {
 
   //Lib loader
   self.loadLib = function(libPath) {
+    util.log("------------------------------");
     util.log("Loading Libraries...");
     return self.buildStructureFromFileSet(self.loadFiles(libPath));
   }
 
   //User Middleware loader
   self.loadUserMiddleWare = function(userMiddlewarePath) {
+    util.log("------------------------------");
     util.log("Loading User middleware...");
     return self.buildStructureFromFileSet(self.loadFiles(userMiddlewarePath));
   }
 
   //Filter Loader
   self.loadUserFilters = function(filterPath) {
+    util.log("------------------------------");
     util.log("Loading User filters...");
     return self.buildStructureFromFileSet(self.loadFiles(filterPath));
   }
 
   //User Routes loader
   self.loadUserRoutes = function(routesFolderPath, dependencies) {
+    util.log("------------------------------");
     util.log("Loading User routes...");
     var router = require(routesFolderPath).getRoutes(dependencies);
     return router;
@@ -51,6 +55,7 @@ var kernel = function() {
 
   //Config Loader
   self.loadConfig = function(configPath) {
+    util.log("------------------------------");
     util.log("Loading Configs...");
     return self.buildStructureFromFileSet(self.loadFiles(configPath));
   }
@@ -59,7 +64,7 @@ var kernel = function() {
     var structure = {};
     if(!_.isEmpty(fileSet)) {
       _.forEach(fileSet, function (modulePath, varName) {
-        util.log("Loading : [" + varName + "] => " + modulePath);
+        util.log("\t[" + varName + "] => " + modulePath);
         structure[varName] = require(modulePath);
       });
     }
@@ -99,6 +104,7 @@ var kernel = function() {
       }
     );
     util.log("Starting ever...");
+    util.log("------------------------------");
     server.startServer({
       Config : config,
       User : {
