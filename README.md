@@ -1,7 +1,15 @@
 <img width="100%"  src="http://ever-js.github.io/img/backgw.png">
 
+[![Gitter](https://img.shields.io/badge/gitter-join_chat-blue.svg)](https://gitter.im/ever-js/ever?utm_source=badge)
+[![Issues](https://img.shields.io/github/issues/ever-js/ever-js.svg)](http://ever-js.github.io/)
+[![bitHound Score](https://www.bithound.io/github/ever-js/ever-js/badges/score.svg)](https://www.bithound.io/github/ever-js/ever-js)
+
 Enjoyment Via Easiness of Restify - js
 ======================
+
+
+[![npm package](https://nodei.co/npm/ever-js.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/ever-js/)
+
 ---
 ### This framework is completely based on **[Restify](http://mcavage.me/node-restify/)**.
 
@@ -43,7 +51,7 @@ everjs init
 ```bash
 MyFirstApp/
     |-routes/
-		|--Routes.js
+    	|--Routes.js
 	|-lib/
 		|--SampleLib.js
 	|-config/
