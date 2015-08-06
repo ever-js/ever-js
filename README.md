@@ -1,4 +1,6 @@
-[E]njoyment [V]ia [E]asiness of [R]estify - js
+<img width="100%" height="300" src="http://ever-js.github.io/img/backgw.png">
+
+Enjoyment Via Easiness of Restify - js
 ======================
 ---
 ### This framework is completely based on **[Restify](http://mcavage.me/node-restify/)**.
@@ -40,7 +42,7 @@ everjs init
 
 ```bash
 MyFirstApp/
-	|-routes/
+    |-routes/
 		|--Routes.js
 	|-lib/
 		|--SampleLib.js
