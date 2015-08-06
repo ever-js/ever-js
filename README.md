@@ -1,4 +1,4 @@
-<img width="100%" height="300" src="http://ever-js.github.io/img/backgw.png">
+<img width="100%"  src="http://ever-js.github.io/img/backgw.png">
 
 Enjoyment Via Easiness of Restify - js
 ======================
