@@ -3,6 +3,7 @@
 [![Gitter](https://img.shields.io/badge/gitter-join_chat-blue.svg)](https://gitter.im/ever-js/ever?utm_source=badge)
 [![Issues](https://img.shields.io/github/issues/ever-js/ever-js.svg)](http://ever-js.github.io/)
 [![bitHound Score](https://www.bithound.io/github/ever-js/ever-js/badges/score.svg)](https://www.bithound.io/github/ever-js/ever-js)
+[![Code Climate](https://codeclimate.com/repos/55c45927e30ba04632001dd2/badges/32dd7d031c0bb7e707f7/gpa.svg)](https://codeclimate.com/repos/55c45927e30ba04632001dd2/feed)
 
 Enjoyment Via Easiness of Restify - js
 ======================
