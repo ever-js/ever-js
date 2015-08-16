@@ -4,16 +4,18 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "start" : "node main.js",
+    "start": "node main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {},
   "author": "",
   "license": "",
   "dependencies": {
-    "lodash": "~3.10.0",
-    "restify": "~3.0.3",
-    "config" : "~1.15.0"
+    "config": "^1.15.0",
+    "lodash": "^3.10.0",
+    "restify": "^3.0.3",
+    "rimraf": "^2.4.2",
+    "sequelize": "^3.5.1"
   },
-  "ev" : "1.1.0"
+  "ev": "1.1.0"
 }
