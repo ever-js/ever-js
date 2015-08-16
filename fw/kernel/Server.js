@@ -159,7 +159,7 @@ everJsServer = function() {
       self.logger("------------------------------");
     });
   }
-
+  
   return pub;
 
 }

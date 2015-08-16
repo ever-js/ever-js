@@ -15,11 +15,18 @@ var kernel = function() {
   self.fileStructure = {
     MY_DEPTH_FROM_ROOT : "..",
     LIB : "lib",
-    CONFIG : "config",
+    RESTIFY_CONFIG : "restifyConfig",
     USER_MIDDLE_WARE : "middleware",
     ROUTES : "routes/Routes.js",
-    USER_FILTERS : "filters"
+    USER_FILTERS : "filters",
+    GLOBAL_CONFIG : "config"
   };
+  
+  //File Extensions
+  self.fileExtensions = {
+    JAVASCRIPT : ".js",
+    JSON : ".json"
+  }
 
   //Need package json
   self.packageJson = require(util.format("%s/package.json", self.fileStructure.MY_DEPTH_FROM_ROOT ));
@@ -53,13 +60,20 @@ var kernel = function() {
     return router;
   }
 
-  //Config Loader
-  self.loadConfig = function(configPath) {
+  //Restify Config Loader
+  self.loadResifyConfig = function(configPath) {
     util.log("------------------------------");
-    util.log("Loading Configs...");
+    util.log("Loading Restify Configs...");
     return self.buildStructureFromFileSet(self.loadFiles(configPath));
   }
 
+ //Global Config Reader
+  self.loadGlobalConfig = function() {
+    util.log("------------------------------");
+    util.log("Loading Global Configs...");
+    return require('config');
+  }
+    
   self.buildStructureFromFileSet = function(fileSet) {
     var structure = {};
     if(!_.isEmpty(fileSet)) {
@@ -71,13 +85,14 @@ var kernel = function() {
     return structure;
   }
 
-  self.loadFiles = function(relativePathFromKernal) {
+  self.loadFiles = function(relativePathFromKernal, fileExtensionFilter) {
+    var fileExtension = fileExtensionFilter ? fileExtensionFilter : self.fileExtensions.JAVASCRIPT;
     var fileList = fs.readdirSync(path.resolve(relativePathFromKernal));
     var fileSet = {};
     _.forEach(fileList, function(file){
-      if(path.extname(file).toLowerCase() == ".js") {
-        fileSet[path.basename(file, '.js')] =
-          util.format("%s/%s", self.fileStructure.MY_DEPTH_FROM_ROOT, path.join(relativePathFromKernal, path.basename(file, '.js') ));
+      if(path.extname(file).toLowerCase() == fileExtension) {
+        fileSet[path.basename(file, fileExtension)] =
+          util.format("%s/%s", self.fileStructure.MY_DEPTH_FROM_ROOT, path.join(relativePathFromKernal, path.basename(file, fileExtension) ));
       }
     });
     return fileSet;
@@ -85,14 +100,25 @@ var kernel = function() {
 
   pub.start = function() {
     util.log(banner.display(self.packageJson));
+    
+    /************************************
+     * Making the global config folder content available global
+     */
+    GLOBAL.GlobalConfig = self.loadGlobalConfig();
+    /*
+    *End of assignment
+    */
+    
     /************************************
      * Making the lib folder content available global
      */
     GLOBAL.Lib = self.loadLib(self.fileStructure.LIB);
     /*
-     End global level vars
-     */
-    var config = self.loadConfig(self.fileStructure.CONFIG);
+    *End of assignment
+    */
+
+    var config = self.loadResifyConfig(self.fileStructure.RESTIFY_CONFIG);
+    
     var userMiddleware = self.loadUserMiddleWare(self.fileStructure.USER_MIDDLE_WARE);
     var userFilters = self.loadUserFilters(self.fileStructure.USER_FILTERS);
     var routes = self.loadUserRoutes(

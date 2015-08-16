@@ -11,8 +11,9 @@
   "author": "",
   "license": "",
   "dependencies": {
-    "lodash": "3.10.0",
-    "restify": "3.0.3"
+    "lodash": "~3.10.0",
+    "restify": "~3.0.3",
+    "config" : "~1.15.0"
   },
-  "ev" : "1.0.0"
+  "ev" : "1.1.0"
 }
