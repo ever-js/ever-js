@@ -1,4 +1,6 @@
 <img width="100%"  src="http://ever-js.github.io/img/backgw.png">
+<sup>powered by</sup> <img width="25%"  src="https://www.mongodb.org/static/images/mongodb-logo-large.png">
+
 
 [![Gitter](https://img.shields.io/badge/gitter-join_chat-blue.svg)](https://gitter.im/ever-js/ever?utm_source=badge)
 [![Issues](https://img.shields.io/github/issues/ever-js/ever-js.svg)](http://ever-js.github.io/)
@@ -82,7 +84,7 @@ MyFirstApp/
 
 |Variables     |Usage                            |
 |--------------|---------------------------------|
-| _            | This is Lodash module.          |
+| _            | This is Lodash module. <br>eg: <br> _.forEach|
 | GlobalConfig | Configureation values based on the environment(default.json or production.json) <br> and common.json <br><br>To access environment based setting values. <br>GlobalConfig.[setting value] <br>eg :<br>GlobalConfig.db.mongo<br><br>To access Common Values in commong.js<br>GlobalConfig.Common.[setting value] <br> eg: <br>GlobalConfig.Common.db_handlers|
 | Dbh	       | Contains the Database handlers. <br> Eg: Dbh.Mongo                   |
 | Lib | Contains modules defined in **lib/** folder. <br>Eg: Lib.SampleLib.sampleFunction(); <br> (not avaialbe to use inside **lib/** )|
@@ -345,8 +347,23 @@ export NODE_ENV=production
 ```
 
 ---
-#####
+##### common.json
 ---
+```json
+{
+	"port" : "8312",
+	"address" : "0.0.0.0",
+	"db_handlers" : {
+		"Mongo" : {
+			"enable" : true,
+			"libPath" : "../handlers/MongoHandler.js"
+		}
+	}
+}
+```
+**db_handlers** contains the information of each Database handler.
+**libPath** must be defined relative to the **kernel/**
+
 
 ---
 #### filters/
