@@ -3,7 +3,7 @@ var _   = require("lodash");
 var restify   = require("restify");
 
 
-everJsServer = function() {
+var everJsServer = function() {
 
   var self = {};
   var pub = {};

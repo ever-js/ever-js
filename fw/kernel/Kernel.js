@@ -80,7 +80,35 @@ var kernel = function() {
     self.mergeConfigFiles(configPath, self.fileExtensions.JSON);
     return require('config');
   }
+      
+  //Load Database handlers
+  self.dbHandlers = function(dep) {
+    util.log("------------------------------");
+    util.log("Loading DB hanlders");
+    util.log("checking for configuration settings");
     
+    if(GlobalConfig.Common.db_handlers) {
+      var handlerSet = {};
+      util.log("Loading DB handlers");
+      _.forEach(GlobalConfig.Common.db_handlers, function(handlerConfig, handlerName) {
+          util.log("Checking handler : "+handlerName);
+          if(handlerConfig.enable == true) {
+            util.log("Handler is enabled");
+            util.log("Loading corresponding library");
+            util.log("Library ->" + handlerConfig.libPath);
+            handlerSet[handlerName] = require(handlerConfig.libPath);
+            handlerSet[handlerName].init(dep);
+          } else {
+            util.log("Handler is disabled");
+          }
+      });
+      return handlerSet;
+    } else {
+      util.log("DB handlers are not defined");
+      return null;
+    }
+
+  }
   self.buildStructureFromFileSet = function(fileSet) {
     var structure = {};
     if(!_.isEmpty(fileSet)) {
@@ -164,9 +192,16 @@ var kernel = function() {
   
   pub.start = function() {
     util.log(banner.display(self.packageJson));
+    /************************************
+    * Favourite Utility module assigning to Global Object
+    */
+     GLOBAL._ = _;
+    /*
+    *End of assignment
+    */    
     
     /************************************
-     * Making the global config folder content available global
+     * Making the global config folder content available globally
      */
     GLOBAL.GlobalConfig = self.loadGlobalConfig(self.fileStructure.GLOBAL_CONFIG);
     /*
@@ -174,7 +209,18 @@ var kernel = function() {
     */
     
     /************************************
-     * Making the lib folder content available global
+     * Making the Database handlers available globally
+     */
+    GLOBAL.Dbh = self.dbHandlers({
+      Logger : util
+    });
+    /*
+    *End of assignment
+    */
+    
+    
+    /************************************
+     * Making the lib folder content available globally
      */
     GLOBAL.Lib = self.loadLib(self.fileStructure.LIB);
     /*
