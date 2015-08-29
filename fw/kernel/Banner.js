@@ -37,7 +37,7 @@ module.exports = {
       "  \tApplication Version : " + packageJson.version + "\n" +
       "  ======================================\n"+
       "  ======================================\n" +
-      "  \tFramework version : 1.0.0         \n" +
+      "  \tFramework version : 1.1.0         \n" +
       "  ======================================\n";      
   }
 }

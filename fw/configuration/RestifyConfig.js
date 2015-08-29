@@ -1,3 +1,4 @@
+'use strict'
 /**
  * Created by ruwang on 7/9/15.
  */
@@ -26,8 +27,8 @@ module.exports = {
 
        */
       name: dependencies.packageJson.name,
-      port : 8312 || process.env.RESTIFY_PORT,
-      address : "0.0.0.0" || process.env.RESTIFY_LISTEN_IP
+      port : GlobalConfig.Common.port,
+      address : GlobalConfig.Common.address
     }
   },
   RestifyMiddlewareSet : function(dependencies) {

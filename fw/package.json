@@ -4,15 +4,19 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "start" : "node main.js",
+    "start": "node main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {},
   "author": "",
   "license": "",
   "dependencies": {
+    "config": "1.15.0",
     "lodash": "3.10.0",
-    "restify": "3.0.3"
+    "mysql": "2.8.0",
+    "restify": "3.0.3",
+    "rimraf": "2.4.2",
+    "mongodb": "2.0.35"
   },
-  "ev" : "1.0.0"
+  "ev": "1.1.0"
 }
