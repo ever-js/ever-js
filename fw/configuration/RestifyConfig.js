@@ -37,6 +37,7 @@ module.exports = {
         Add more restify modules
          */
       dependencies.restifyObject.acceptParser(dependencies.serverObject.acceptable),
+      dependencies.restifyObject.authorizationParser(),
       dependencies.restifyObject.gzipResponse(),
       dependencies.restifyObject.queryParser(),
       dependencies.restifyObject.bodyParser()
