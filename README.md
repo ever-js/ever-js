@@ -17,9 +17,11 @@ Enjoyment Via Easiness of Restify - js
 ---
 * **[Installing the ever-js](https://github.com/ever-js/ever-js/blob/master/README.md#installing-the-framework)**
 * **[Folder structure](https://github.com/ever-js/ever-js/blob/master/README.md#folder-structure)**
+* **[Global Variables](https://github.com/ever-js/ever-js/blob/master/README.md#folder-structure)**
+* **[Handlers](https://github.com/ever-js/ever-js/blob/master/README.md#handlers)**
 * **[Routes](https://github.com/ever-js/ever-js/blob/master/README.md#routes)**
 * **[Library](https://github.com/ever-js/ever-js/blob/master/README.md#lib)**
-* **[Config](https://github.com/ever-js/ever-js/blob/master/README.md#config)**
+* **[Configuration](https://github.com/ever-js/ever-js/blob/master/README.md#config)**
 * **[User Filters](https://github.com/ever-js/ever-js/blob/master/README.md#filters)**
 * **[User Middleware](https://github.com/ever-js/ever-js/blob/master/README.md#middleware)**
 * **[Kernel](https://github.com/ever-js/ever-js/blob/master/README.md#kernel)**
@@ -55,8 +57,14 @@ MyFirstApp/
     	|--Routes.js
 	|-lib/
 		|--SampleLib.js
-	|-config/
+	|-configuration/
+		|-global/
+			|--common.json
+			|--default.json
+			|--production.json
 		|--RestifyConfig.js
+	|-handlers/
+		|--MongoHandler.js	
 	|-filters/
 		|--SampleFilters.js
 	|-middleware/
@@ -68,6 +76,33 @@ MyFirstApp/
 	|--main.js
 	|--package.json
 ```
+---
+#### Global Variables
+---
+
+---
+#### handlers/
+---
+
+This contains all the handler modules. 
+
+---
+###### MongoHandler.js
+---
+
+This handler manage Mongo Database connections.
+
+Usage of Mongo Hanlder.
+```js
+sampleFunction : function() {
+	Dbh.Mongo.connect(function(err, db){
+    			db.collection("Test").find({}).toArray(function(err, result) {
+        		console.log(result);
+    		});
+	});
+}
+```
+
 ---
 #### routes/
 ---
