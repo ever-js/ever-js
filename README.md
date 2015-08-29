@@ -17,7 +17,7 @@ Enjoyment Via Easiness of Restify - js
 ---
 * **[Installing the ever-js](https://github.com/ever-js/ever-js/blob/master/README.md#installing-the-framework)**
 * **[Folder structure](https://github.com/ever-js/ever-js/blob/master/README.md#folder-structure)**
-* **[Global Variables](https://github.com/ever-js/ever-js/blob/master/README.md#folder-structure)**
+* **[Global Variables](https://github.com/ever-js/ever-js/blob/master/README.md#global-variables)**
 * **[Handlers](https://github.com/ever-js/ever-js/blob/master/README.md#handlers)**
 * **[Routes](https://github.com/ever-js/ever-js/blob/master/README.md#routes)**
 * **[Library](https://github.com/ever-js/ever-js/blob/master/README.md#lib)**
@@ -79,6 +79,15 @@ MyFirstApp/
 ---
 #### Global Variables
 ---
+
+|Variables     |Usage                            |
+|--------------|---------------------------------|
+| _            | This is Lodash module.          |
+| GlobalConfig | Configureation values based on the environment(default.json or production.json) <br> and common.json <br><br>To access environment based setting values. <br>GlobalConfig.[setting value] <br>eg :<br>GlobalConfig.db.mongo<br><br>To access Common Values in commong.js<br>GlobalConfig.Common.[setting value] <br> eg: <br>GlobalConfig.Common.db_handlers|
+| Dbh	       | Contains the Database handlers. <br> Eg: Dbh.Mongo                   |
+| Lib | Contains modules defined in **lib/** folder. <br>Eg: Lib.SampleLib.sampleFunction(); <br> (not avaialbe to use inside **lib/** )|
+
+
 
 ---
 #### handlers/
@@ -213,7 +222,7 @@ Lib.[Module file name].[function name]()
 Lib.SampleLib.sampleFunction();
 ```
 ---
-#### config/
+#### configuration//
 ---
 
 This folder contains the main config file **RestifyConfig.js**
@@ -296,6 +305,49 @@ return [
           dependencies.restifyObject.pause()
     ];
 ```
+---
+##### configuration/global/
+---
+Contains all the configuration values based environment.
+If **NODE_ENV** is **NOT** defined, **default.json** is loaded.
+for Production configuration values.
+```bash
+export NODE_ENV=production
+```
+| File name  | Descriptions   | Environment
+|---|---|---|
+|default.json| contains none production environment values. <br>| default environment.  |
+|production.json| contains production enviroment values.   |  Production |
+|common.json|Contains common values for both the enviroments   | All  |
+
+---
+##### default.json
+---
+
+```json
+{
+	"environment" : "default",
+	"connectionStrings" : {
+		"mongo" : "mongodb://127.0.0.1/test"
+	}
+}
+```
+---
+##### production.json
+---
+```json
+{
+	"environment" : "production",
+	"db" : {
+		"mongo" : "mongodb://127.0.0.1/test"
+	}
+}
+```
+
+---
+#####
+---
+
 ---
 #### filters/
 ---
